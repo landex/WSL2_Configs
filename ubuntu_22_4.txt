@@ -1,0 +1,138 @@
+>-> This is my WSL 2 Configuration using Ubuntu 22.04
+
+$ user = landex
+$ pass = pumpkin
+
+>-> Update the existing packages
+
+$ sudo apt update
+
+>-> Configuration of zshell
+
+>-> First step make download of zsh
+
+$ sudp apt install zsh
+
+>-> After make download create a directory to put our configuration
+
+$ mkdir .zshell
+
+>-> In your home directory create a file below
+
+$ touch .zshenv
+
+>-> Configue the .zshenv file
+
+export XDG_CONFIG_HOME="$HOME/.zshell"
+export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
+export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
+export ZDOTDIR="$XDG_CONFIG_HOME"
+
+>-> History configuration in .zshenv file
+export HISTFILE="$ZDOTDIR/.zhistory"    # History filepath
+export HISTSIZE=10000                   # Maximum events for internal history
+export SAVEHIST=10000                   # Maximum events in history file
+setopt EXTENDED_HISTORY                 # Write the history file in the ':start:elapsed;command\' format
+setopt SHARE_HISTORY                    # Share history between all sessions
+setopt HIST_EXPIRE_DUPS_FIRST           # Expire a duplicate event first when trimming history
+setopt HIST_IGNORE_DUPS                 # Do not record an event that was just recorded again
+setopt HIST_IGNORE_ALL_DUPS             # Delete an old recorded event if a new event is a duplicate
+setopt HIST_FIND_NO_DUPS                # Do not display a previously found event
+setopt HIST_IGNORE_SPACE                # Do not record an event starting with a space
+setopt HIST_SAVE_NO_DUPS                # Do not write a duplicate event to the history file
+setopt HIST_VERIFY                      # Do not execute immediately upon history expansion
+
+>-> Now set zshell as defailt shell
+
+$ chsh -s $(which zsh)
+
+>-> Crete the file .zshrc in directory of $ZDOTID
+
+$ touch .zshrc
+
+>-> Cobfigure some colored thing to easy the terminal
+
+>-> Add this configuration in our .zshrc file
+
+source $ZDOTDIR/.zaliases
+
+>-> Now we will create a .zaliases in our $ZDOTDIR to store own aliases
+
+$ touch .zaliases
+
+>-> This is our initial .zaliases file
+
+alias ls='ls --color=auto'              # Colored output when run ls command
+alias grep='grep --color=auto'          # Colored grep output
+alias fgrep='fgrep --color=auto'        # Colored fgrep output
+alias egrep='egrep --color=auto'        # Colored egrep output
+alias zload='source $ZDOTDIR/.zshrc'    # To reload .zsrhc file to effect new configurations
+
+>-> Some tools to us cutomize our terminal
+
+>-> Git, is necessary to make dowload of some softwares and projects
+
+sudp apt install git
+
+>-> ZSH Autosuggestions 
+
+$ git clone https://github.com/zsh-users/zsh-autosuggestions ./.zsh-autosuggestions
+
+>-> Now insert in your .zshrc file the command below to load
+
+source $ZDOTDIR/.zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 
+
+>-> Syntax highlights
+
+$ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ./.zsh-syntax-highlighting.git
+
+>-> Add this configuration in your .zshrc file
+
+$ source $ZDOTDIR/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+>-> Set up the vi mode in your terminal
+
+>-> Add this line in .zshrc file
+set -o vi
+
+>-> Configure own PS1 and PS2 terminal prompts
+export PS1="%F{093}%B%n@%b%f 📂%F{085}%B%~%f%b
+ 🚀 "
+
+export PS2=" 🚀 "
+
+>-> To use docker you need install from the tar file
+
+$ wget https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz
+
+>-> Uncompress the folde
+
+$ tar xzvf docker-20.10.9.tgz
+
+>-> Copy to directory
+$ sudo cp docker/* /usr/bin/
+
+>-> Add docker to group
+
+$ sudo usermod -aG docker $USER
+
+>-> Solve docker problem
+https://patrickwu.space/2021/03/09/wsl-solution-to-native-docker-daemon-not-starting/
+
+https://dev.to/bowmanjd/install-docker-on-windows-wsl-without-docker-desktop-34m9
+
+>-> Installing pip
+
+$ sudo apt install python3-pip
+
+>-> Installing jupyter-lab
+
+$ pip install jupyterlab
+
+>-> After install jupyter is necessary add this in path
+
+$ export PATH=~/bin:/home/landex/.local/bin:$PATH
+
+>-> To start the Jupyter Lab run command below
+
+$ jupyter-lab

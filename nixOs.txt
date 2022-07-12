@@ -1,0 +1,33 @@
+<> Installing NixOS in WSL2
+
+-> Make download of file nixos-wsl-installer-fixed.tar.gz in the page https://christine.website/blog/nix-flakes-4-wsl-2022-05-01
+
+$ wsl --import NixOS .\NixOS\ C:\Users\landi\Downloads\nixos-wsl-installer-fixed.tar.gz --version 2
+
+-> Now run command to NixOS install
+
+$ wsl -d NixOS
+
+-> After instalation done run commands below
+
+$ wsl --shutdown
+
+$ wsl -d NixOS
+
+-> After stebs above you have a simple and minimal Linux OS running
+
+-> Install git
+
+nix-env --install git
+
+-> Generate you nix config file
+
+$  mkdir -p $HOME/nix-config
+
+$ nixos-generate-config --dir $HOME/nix-config
+
+-> Install docker 
+
+$ nix-env --install docker
+
+-> Enable docker service

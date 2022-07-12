@@ -1,0 +1,125 @@
+<> Debian WSL Configuration - Set UP.
+
+-> Installed by MS Store
+-> Type launch
+-> User and Password => shredder/shinobigatana  
+
+<> After installation run  updates commands
+
+-> Update packages
+sudo apt full-upgrade
+
+-> Update versions
+sudo apt full-upgrade
+
+-> Check Version of Debian
+cat /etc/debian_version
+
+-> If path return Windows variables we can disable with command below
+echo 0 > /proc/sys/fs/binfmt_misc/WSLInterop
+
+-> But if you can stay on this feature run command
+echo 1 > /proc/sys/fs/binfmt_misc/WSLInterop
+
+-> The commands above and link below not solve the problem of path with windows config was displayed in linux.
+https://itectec.com/superuser/is-windows-subsystem-for-linux-able-to-run-windows-exe-programs/
+
+<> Create the WSL2 File in %UserProfile%
+
+[wsl2]
+memory=5GB #Limits the memory
+processors=2 # Makes the WSL 2 VM use 4 virtual processors
+[interop]
+enabled=false
+appendWindowsPath=false #disable path variable
+
+<> Create a file into distribuition
+sudo vi /etc/wsl.conf
+[interop]
+appendWindowsPath = false
+
+-> Restart the WSL, need adm level
+Restart-Service LxssManager
+
+
+<> VI configuration
+
+-> Update vim
+sudo apt-get install vim-gui-common
+sudo apt-get install vim-runtime
+
+-> Crete .vimrc file
+set number
+syntax on
+
+<> Installing Python 3
+
+-> Verify if all packages are updated
+sudo apt update
+
+-> Install additional packages
+sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev curl libbz2-dev
+
+-> Install wget
+sudo apt install wget
+
+-> Make download of python package
+wget https://www.python.org/ftp/python/3.10.2/Python-3.10.2.tgz
+
+-> Unpack files
+tar -xf Python-3.10.2.tgz
+
+-> Access the folder, and rum command below to start configuration
+./configure --enable-optimizations
+
+-> Start Python Building
+make -j 2
+
+-> Make installation
+sudo make altinstall
+
+-> Configure the python and pip to call only pip and python
+-> Chek python path
+type python3.10
+python3.10 is /usr/local/bin/python3.10
+
+
+-> Check pip path
+type pip3.10
+python3.10 is /usr/local/bin/pip3.10
+
+-> Create a link at bin folder - Python
+sudo ln -s /usr/local/bin/pip3.10 /usr/bin/pip
+
+-> Create a link at bin folder - PIP
+sudo ln -s /usr/local/bin/python3.10 /usr/bin/python
+
+After close and open shell again, in our case the wsl2
+
+-> Testing the installation
+type pip -v and python -v
+
+-> Return of pip
+pip 21.2.4 from /usr/local/lib/python3.10/site-packages/pip (python 3.10)
+
+-> Return of python
+Python 3.10.2
+
+-> Atualize o pip
+sudo /usr/bin/python -m pip install --upgrade pip
+
+<> Install Robot
+
+-> Install robotframework
+pip install robotframework
+
+<> Install some libraries
+
+-> Selenium
+pip install --upgrade robotframework-seleniumlibrary
+
+-> Requests
+pip install --upgrade robotframework-requests
+
+
+
